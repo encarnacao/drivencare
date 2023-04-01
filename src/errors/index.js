@@ -39,10 +39,19 @@ function invalidCredentialsError() {
 	};
 }
 
+function badRequestError(message) {
+	return {
+		status: 400,
+		name: "BadRequestError",
+		message,
+	};
+}
+
 export default {
 	unprocessableEntityError,
 	conflictError,
 	unauthorizedError,
 	notFoundError,
 	invalidCredentialsError,
+	badRequestError,
 };
