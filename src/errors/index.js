@@ -6,10 +6,10 @@ function unprocessableEntityError(message) {
 	};
 }
 
-function duplicatedEmailError(email) {
+function conflictError(email) {
 	return {
-        status: 409,
-		name: "DuplicatedEmailError",
+		status: 409,
+		name: "ConflictError",
 		message: "There is already an user with given email",
 		email,
 	};
@@ -17,7 +17,7 @@ function duplicatedEmailError(email) {
 
 function unauthorizedError() {
 	return {
-        status: 401,
+		status: 401,
 		name: "UnauthorizedError",
 		message: "You must be signed in to continue",
 	};
@@ -25,7 +25,7 @@ function unauthorizedError() {
 
 function notFoundError() {
 	return {
-        status: 404,
+		status: 404,
 		name: "NotFoundError",
 		message: "No result for this search!",
 	};
@@ -33,16 +33,16 @@ function notFoundError() {
 
 function invalidCredentialsError() {
 	return {
-        status: 401,
+		status: 401,
 		name: "InvalidCredentialsError",
 		message: "Email or password are incorrect",
 	};
 }
 
 export default {
-    unprocessableEntityError,
-    duplicatedEmailError,
-    unauthorizedError,
-    notFoundError,
-    invalidCredentialsError,
-}
+	unprocessableEntityError,
+	conflictError,
+	unauthorizedError,
+	notFoundError,
+	invalidCredentialsError,
+};
