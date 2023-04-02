@@ -42,4 +42,16 @@ async function scheduleAppointment({ doctorId, patientId, date, time }) {
 	return appointment;
 }
 
-export default { getFreeAppoitments, scheduleAppointment };
+async function updateAppointmentStatus({ appointmentId, status }) {
+	const appointment = await appoitmentRepository.updateAppointmentStatus(
+		appointmentId,
+		status
+	);
+	return appointment;
+}
+
+export default {
+	getFreeAppoitments,
+	scheduleAppointment,
+	updateAppointmentStatus,
+};

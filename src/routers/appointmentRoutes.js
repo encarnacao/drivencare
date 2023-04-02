@@ -10,11 +10,20 @@ appointmentRouter.get(
 	authMiddleware.validateCredentials("patients"),
 	appointmentController.getFreeAppoitments
 );
+
 appointmentRouter.post(
 	"/:doctorId/:date/:time",
 	authMiddleware.validateCredentials("patients"),
 	appointmentMiddleware.checkConflict,
 	appointmentController.scheduleAppointment
+);
+
+appointmentRouter.post(
+	"/:appointmentId/:status",
+	authMiddleware.validateCredentials("doctors"),
+	appointmentMiddleware.checkStatus,
+	appointmentMiddleware.checkAppointment,
+	appointmentController.updateAppointmentStatus
 );
 
 export default appointmentRouter;

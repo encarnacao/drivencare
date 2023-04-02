@@ -24,4 +24,26 @@ async function checkConflict({ doctorId, date, time }) {
 	return rowCount;
 }
 
-export default { searchDoctorAppointments, scheduleAppointment, checkConflict };
+async function getAppointmentById(appointmentId) {
+	const { rows } = await database.query(
+		"SELECT * FROM appointments WHERE id = $1",
+		[appointmentId]
+	);
+	return rows[0];
+}
+
+async function updateAppointmentStatus(appointmentId, status) {
+	const { rows } = await database.query(
+		"UPDATE appointments SET status = $2 WHERE id = $1 RETURNING id, date, time, status",
+		[appointmentId, status]
+	);
+	return rows;
+}
+
+export default {
+	searchDoctorAppointments,
+	scheduleAppointment,
+	checkConflict,
+	updateAppointmentStatus,
+	getAppointmentById,
+};

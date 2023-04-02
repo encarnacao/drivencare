@@ -24,4 +24,19 @@ async function scheduleAppointment(req, res, next) {
 	}
 }
 
-export default { getFreeAppoitments, scheduleAppointment };
+async function updateAppointmentStatus(req, res, next) {
+	try {
+		const appointment = await appoitmentServices.updateAppointmentStatus(
+			req.params
+		);
+		res.status(200).send(appointment);
+	} catch (e) {
+		next(e);
+	}
+}
+
+export default {
+	getFreeAppoitments,
+	scheduleAppointment,
+	updateAppointmentStatus,
+};
