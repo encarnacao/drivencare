@@ -11,6 +11,12 @@ appointmentRouter.get(
 	appointmentController.getFreeAppoitments
 );
 
+appointmentRouter.get(
+	"/:doctorId",
+	authMiddleware.validateCredentials("patients"),
+	appointmentController.getFutureFreeTimes
+);
+
 appointmentRouter.post(
 	"/:doctorId/:date/:time",
 	authMiddleware.validateCredentials("patients"),

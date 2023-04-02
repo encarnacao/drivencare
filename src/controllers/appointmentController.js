@@ -35,8 +35,20 @@ async function updateAppointmentStatus(req, res, next) {
 	}
 }
 
+async function getFutureFreeTimes(req, res, next) {
+	try {
+		const available = await appoitmentServices.getFutureFreeTimes(
+			req.params
+		);
+		res.status(200).send(available);
+	} catch (e) {
+		next(e);
+	}
+}
+
 export default {
 	getFreeAppoitments,
 	scheduleAppointment,
 	updateAppointmentStatus,
+	getFutureFreeTimes,
 };

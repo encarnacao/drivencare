@@ -50,8 +50,28 @@ async function updateAppointmentStatus({ appointmentId, status }) {
 	return appointment;
 }
 
+async function getFutureFreeTimes({ doctorId }) {
+	const appointments = await appoitmentRepository.searchFutureAppointments(
+		doctorId
+	);
+	const available = appointments.map((appointment) => {
+		const freeTimes = TIMES.filter(
+			(time) =>
+				!appointment.appointments
+					.map((appointment) => appointment.time)
+					.includes(time)
+		);
+		return {
+			date: appointment.date,
+			freeTimes,
+		};
+	});
+	return available;
+}
+
 export default {
 	getFreeAppoitments,
 	scheduleAppointment,
 	updateAppointmentStatus,
+	getFutureFreeTimes
 };

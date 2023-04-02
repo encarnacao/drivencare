@@ -8,6 +8,29 @@ async function searchAppointmentsByDate(doctorId, date) {
 	return rows;
 }
 
+async function searchFutureAppointments(doctorId) {
+	const { rows } = await database.query(
+		`
+		SELECT
+		s.date,
+		CASE
+		WHEN COUNT(a.id) = 0 THEN '[]'::json
+		ELSE json_agg(json_build_object('id',a.id,'patient', p.name,'time', a.time, 'status', a.status))
+	  	END AS appointments
+	  	FROM
+		generate_series(CURRENT_DATE, CURRENT_DATE + INTERVAL '7 days', '1 day') AS s(date)
+  		LEFT JOIN appointments a ON a.doctor_id = $1 AND a.date = s.date
+		LEFT JOIN patients p ON a.patient_id = p.id
+	  	GROUP BY
+		s.date
+		ORDER BY
+		s.date ASC;
+	  `,
+		[doctorId]
+	);
+	return rows;
+}
+
 async function scheduleAppointment({ doctorId, patientId, date, time }) {
 	const { rows } = await database.query(
 		"INSERT INTO appointments (doctor_id, patient_id, date, time) VALUES ($1, $2, $3, $4) RETURNING id, date, time, status",
@@ -46,4 +69,5 @@ export default {
 	checkConflict,
 	updateAppointmentStatus,
 	getAppointmentById,
+	searchFutureAppointments,
 };
