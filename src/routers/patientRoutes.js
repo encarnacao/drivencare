@@ -16,4 +16,16 @@ patientRouter.post(
 
 patientRouter.post("/signin", authController.signin("patients"));
 
+patientRouter.get(
+	"/appointments",
+	authMiddleware.validateCredentials("patients"),
+	patientControllers.getAppointments
+);
+
+patientRouter.get(
+	"/appointments/history",
+	authMiddleware.validateCredentials("patients"),
+	patientControllers.getHistory
+);
+
 export default patientRouter;
