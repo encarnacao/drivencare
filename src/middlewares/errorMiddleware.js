@@ -34,7 +34,7 @@ export function handleApplicationErrors(err, req, res, next) {
 			message: err.message,
 		});
 	}
-
+	console.log(err);
 	return res.status(500).send({
 		error: "Internal Server Error",
 		message: err
