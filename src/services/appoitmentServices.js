@@ -21,7 +21,7 @@ const TIMES = [
 ];
 
 async function getFreeAppoitments({ date, doctorId }) {
-	const appointments = await appoitmentRepository.searchDoctorAppointments(
+	const appointments = await appoitmentRepository.searchAppointmentsByDate(
 		doctorId,
 		date
 	);
