@@ -35,4 +35,22 @@ async function get({ city, state, specialty, name }) {
 	return doctors;
 }
 
-export default { create, get };
+async function getAppointments(doctorId) {
+	const appointments = await doctorRepository.getScheduledAppointments(
+		doctorId
+	);
+	if (appointments.length === 0) {
+		throw errors.notFoundError();
+	}
+	return appointments;
+}
+
+async function getHistory(doctorId) {
+	const appointments = await doctorRepository.getAppointmentHistory(doctorId);
+	if (appointments.length === 0) {
+		throw errors.notFoundError();
+	}
+	return appointments;
+}
+
+export default { create, get, getAppointments, getHistory };

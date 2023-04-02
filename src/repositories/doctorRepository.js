@@ -51,4 +51,42 @@ async function getDoctorByRegistration(registration) {
 	return { row, rowCount };
 }
 
-export default { createDoctor, getDoctors, getDoctorByRegistration };
+async function getScheduledAppointments(doctorId) {
+	const { rows } = await database.query(
+		`
+		SELECT a.id, a.date, a.time, p.name AS patient_name, d.specialty as doctor_specialty, a.status
+		FROM appointments a
+		JOIN doctors d ON d.id = a.doctor_id
+		JOIN patients p ON p.id = a.patient_id
+		WHERE a.doctor_id = $1
+		AND a.status <> 'canceled'
+		AND a.date >= CURRENT_DATE
+	`,
+		[doctorId]
+	);
+	return rows;
+}
+
+async function getAppointmentHistory(doctorId) {
+	const { rows } = await database.query(
+		`
+		SELECT a.id, a.date, a.time, p.name AS patient_name, d.specialty as doctor_specialty, a.status
+		FROM appointments a
+		JOIN doctors d ON d.id = a.doctor_id
+		JOIN patients p ON p.id = a.patient_id
+		WHERE a.doctor_id = $1
+		AND a.date < CURRENT_DATE
+		OR a.status = 'canceled'
+	`,
+		[doctorId]
+	);
+	return rows;
+}
+
+export default {
+	createDoctor,
+	getDoctors,
+	getDoctorByRegistration,
+	getScheduledAppointments,
+	getAppointmentHistory,
+};
