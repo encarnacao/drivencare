@@ -2,6 +2,7 @@ import authRepository from "../repositories/authRepository.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from "bcrypt";
 import dotenv from 'dotenv';
+import errors from "../errors/index.js";
 
 dotenv.config();
 
