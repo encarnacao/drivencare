@@ -9,13 +9,13 @@ async function create(req, res, next) {
     }
 }
 
-async function getAll(_, res, next) {
+async function get(req, res, next) {
     try {
-        const doctors = await doctorServices.getAll();
+        const doctors = await doctorServices.get(req.query);
         res.status(200).send(doctors);
     } catch (e) {
         next(e);
     }
 }
 
-export default { create, getAll };
+export default { create, get };

@@ -18,10 +18,29 @@ async function createDoctor(
 	return rows;
 }
 
-function getAllDoctors() {
-	return database.query(
-		`SELECT id, name, specialty, city, state, registration FROM doctors`
-	);
+function getDoctors({ city, state, specialty, name }) {
+	const params = [];
+	let query = `
+	SELECT id, name, specialty, city, state, registration FROM doctors
+	WHERE 1 = 1 
+	`;
+	if (city) {
+		query += `AND city ILIKE $${params.length + 1} || '%' `;
+		params.push(city);
+	}
+	if (name) {
+		query += `AND name ILIKE $${params.length + 1} || '%'`;
+		params.push(name);
+	}
+	if (state) {
+		query += `AND state ILIKE $${params.length + 1} `;
+		params.push(state);
+	}
+	if (specialty) {
+		query += `AND specialty ILIKE $${params.length + 1} `;
+		params.push(specialty);
+	}
+	return database.query(query, params);
 }
 
 async function getDoctorByRegistration(registration) {
@@ -32,4 +51,4 @@ async function getDoctorByRegistration(registration) {
 	return { row, rowCount };
 }
 
-export default { createDoctor, getAllDoctors, getDoctorByRegistration };
+export default { createDoctor, getDoctors, getDoctorByRegistration };

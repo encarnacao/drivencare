@@ -8,7 +8,7 @@ import doctorMiddleware from "../middlewares/doctorMiddleware.js";
 
 const doctorRouter = Router();
 
-doctorRouter.get("/", authMiddleware.validateCredentials("patients"), doctorControllers.getAll);
+doctorRouter.get("/", authMiddleware.validateCredentials("patients"), doctorControllers.get);
 
 doctorRouter.post(
 	"/signup",

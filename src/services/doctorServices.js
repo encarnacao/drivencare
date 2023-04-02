@@ -24,10 +24,15 @@ async function create({
 	return doctor[0];
 }
 
-async function getAll() {
-	const { rows: doctors, rowCount } = await doctorRepository.getAllDoctors();
+async function get({ city, state, specialty, name }) {
+	const { rows: doctors, rowCount } = await doctorRepository.getDoctors({
+		city,
+		state,
+		specialty,
+		name,
+	});
 	if (!rowCount) throw errors.notFoundError();
 	return doctors;
 }
 
-export default { create, getAll };
+export default { create, get };
