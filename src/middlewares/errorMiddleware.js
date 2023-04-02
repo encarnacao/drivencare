@@ -1,5 +1,5 @@
 export function handleApplicationErrors(err, req, res, next) {
-	if (err.name === "ConflictError") {
+	if (err.name === "EmailConflictError") {
 		return res
 			.status(err.status)
 			.send({ message: err.message, email: err.email });
@@ -42,6 +42,13 @@ export function handleApplicationErrors(err, req, res, next) {
 			message: err.message,
 		});
 	}
+
+	if (err.name === "ForbiddenError") {
+		return res.status(err.status).send({
+			message: err.message,
+		});
+	}
+
 	console.log(err);
 	return res.status(500).send({
 		error: "Internal Server Error",

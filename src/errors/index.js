@@ -6,10 +6,10 @@ function unprocessableEntityError(message) {
 	};
 }
 
-function conflictError(email) {
+function emailConflictError(email) {
 	return {
 		status: 409,
-		name: "ConflictError",
+		name: "emailConflictError",
 		message: "There is already an user with given email",
 		email,
 	};
@@ -57,12 +57,21 @@ function badRequestError(message) {
 	};
 }
 
+function forbiddenError() {
+	return {
+		status: 403,
+		name: "ForbiddenError",
+		message: "You don't have permission to access this resource",
+	};
+}
+
 export default {
 	unprocessableEntityError,
-	conflictError,
+	emailConflictError,
 	unauthorizedError,
 	notFoundError,
 	invalidCredentialsError,
 	badRequestError,
 	timeConflictError,
+	forbiddenError,
 };

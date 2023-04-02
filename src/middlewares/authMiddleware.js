@@ -8,7 +8,7 @@ function checkConflicts(table) {
 		try {
 			const user = await authRepository.searchEmail(email, table);
 			if (user.length > 0) {
-				throw errors.conflictError(email);
+				throw errors.emailConflictError(email);
 			}
 		} catch (e) {
 			next(e);
