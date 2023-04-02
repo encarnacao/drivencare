@@ -9,9 +9,18 @@ function unprocessableEntityError(message) {
 function emailConflictError(email) {
 	return {
 		status: 409,
-		name: "emailConflictError",
+		name: "EmailConflictError",
 		message: "There is already an user with given email",
 		email,
+	};
+}
+
+function registrationConflictError(registration) {
+	return {
+		status: 409,
+		name: "RegistrationConflictError",
+		message: "There is already an user with given registration",
+		registration,
 	};
 }
 
@@ -74,4 +83,5 @@ export default {
 	badRequestError,
 	timeConflictError,
 	forbiddenError,
+	registrationConflictError,
 };
