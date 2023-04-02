@@ -2,7 +2,7 @@ import doctorServices from '../services/doctorServices.js';
 
 async function create(req, res, next) {
     try {
-        const doctor = doctorServices.create(req.body);
+        const doctor = await doctorServices.create(req.body);
         res.status(201).send(doctor);
     } catch (e){
         next(e);
