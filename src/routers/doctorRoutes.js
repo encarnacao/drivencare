@@ -7,6 +7,8 @@ import doctorControllers from "../controllers/doctorControllers.js";
 
 const doctorRouter = Router();
 
+doctorRouter.get("/", authMiddleware.validateCredentials("patients"), doctorControllers.getAll);
+
 doctorRouter.post(
 	"/signup",
 	validateSchema(doctorSchema),

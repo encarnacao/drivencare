@@ -1,15 +1,22 @@
-import bcrypt from 'bcrypt';
 import doctorRepository from '../repositories/doctorRepository.js';
+import doctorServices from '../services/doctorServices.js';
 
 async function create(req, res, next) {
-    const { name, email, password, specialty, city, state, registration } = req.body;
     try {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const doctor = await doctorRepository.createDoctor(name, email, hashedPassword, specialty, city, state, registration);
-        res.status(201).send(doctor[0]);
+        const doctor = doctorServices.create(req.body);
+        res.status(201).send(doctor);
     } catch (e){
         next(e);
     }
 }
 
-export default { create };
+async function getAll(_, res, next) {
+    try {
+        const doctors = await doctorServices.getAll();
+        res.status(200).send(doctors);
+    } catch (e) {
+        next(e);
+    }
+}
+
+export default { create, getAll };

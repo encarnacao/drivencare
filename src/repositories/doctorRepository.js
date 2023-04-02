@@ -18,5 +18,10 @@ async function createDoctor(
 	return rows;
 }
 
+function getAllDoctors() {
+	return database.query(
+		`SELECT id, name, specialty, city, state, registration FROM doctors`
+	);
+}
 
-export default { createDoctor };
+export default { createDoctor, getAllDoctors };
