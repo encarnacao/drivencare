@@ -1,4 +1,3 @@
-import doctorRepository from '../repositories/doctorRepository.js';
 import doctorServices from '../services/doctorServices.js';
 
 async function create(req, res, next) {
