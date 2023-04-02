@@ -1,12 +1,10 @@
 export function handleApplicationErrors(err, req, res, next) {
-	console.log(err);
-	if (err.name) {
-		const error = {	...err }
-		delete error.status;
-		return res.status(err.status).send(error);
+	let error = { ...err };
+	if(err.file === 'enum.c'){
+		error = { message: 'Invalid request'};
+		err.status = 400;
 	}
-	return res.status(500).send({
-		error: "Internal Server Error",
-		message: err,
-	});
+	delete error.status;
+	if (!err.status) err.status = 500;
+	return res.status(err.status).send(error);
 }
