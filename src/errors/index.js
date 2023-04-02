@@ -15,6 +15,16 @@ function conflictError(email) {
 	};
 }
 
+function timeConflictError({ date, time }) {
+	return {
+		status: 409,
+		name: "TimeConflictError",
+		message: "There is already an appointment at this time",
+		date,
+		time,
+	};
+}
+
 function unauthorizedError() {
 	return {
 		status: 401,
@@ -54,4 +64,5 @@ export default {
 	notFoundError,
 	invalidCredentialsError,
 	badRequestError,
+	timeConflictError,
 };

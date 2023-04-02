@@ -32,4 +32,14 @@ async function getFreeAppoitments({ date, doctorId }) {
 	return freeTimes;
 }
 
-export default { getFreeAppoitments };
+async function scheduleAppointment({ doctorId, patientId, date, time }) {
+	const appointment = await appoitmentRepository.scheduleAppointment({
+		doctorId,
+		patientId,
+		date,
+		time,
+	});
+	return appointment;
+}
+
+export default { getFreeAppoitments, scheduleAppointment };

@@ -11,6 +11,14 @@ export function handleApplicationErrors(err, req, res, next) {
 		});
 	}
 
+	if (err.name === "TimeConflictError") {
+		return res.status(err.status).send({
+			message: err.message,
+			date: err.date,
+			time: err.time,
+		});
+	}
+
 	if (err.name === "UnprocessableEntityError") {
 		return res.status(err.status).send({
 			message: err.message,
@@ -37,6 +45,6 @@ export function handleApplicationErrors(err, req, res, next) {
 	console.log(err);
 	return res.status(500).send({
 		error: "Internal Server Error",
-		message: err
+		message: err,
 	});
 }

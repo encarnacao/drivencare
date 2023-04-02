@@ -11,4 +11,17 @@ async function getFreeAppoitments(req, res, next) {
 	}
 }
 
-export default { getFreeAppoitments };
+async function scheduleAppointment(req, res, next) {
+	try {
+		const patientId = res.locals.user.id;
+		const appointment = await appoitmentServices.scheduleAppointment({
+			...req.params,
+			patientId,
+		});
+		res.status(201).send(appointment);
+	} catch (e) {
+		next(e);
+	}
+}
+
+export default { getFreeAppoitments, scheduleAppointment };
