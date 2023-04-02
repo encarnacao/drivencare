@@ -4,6 +4,7 @@ import authMiddleware from "../middlewares/authMiddleware.js";
 import authController from "../controllers/authController.js";
 import doctorSchema from "../schemas/doctorSchema.js";
 import doctorControllers from "../controllers/doctorControllers.js";
+import doctorMiddleware from "../middlewares/doctorMiddleware.js";
 
 const doctorRouter = Router();
 
@@ -12,6 +13,7 @@ doctorRouter.get("/", authMiddleware.validateCredentials("patients"), doctorCont
 doctorRouter.post(
 	"/signup",
 	validateSchema(doctorSchema),
+	doctorMiddleware.checkConflict,
 	authMiddleware.checkConflicts("doctors"),
     doctorControllers.create
 );

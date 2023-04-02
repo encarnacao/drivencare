@@ -24,4 +24,12 @@ function getAllDoctors() {
 	);
 }
 
-export default { createDoctor, getAllDoctors };
+async function getDoctorByRegistration(registration) {
+	const { row, rowCount } = await database.query(
+		`SELECT * FROM doctors WHERE registration = $1`,
+		[registration]
+	);
+	return { row, rowCount };
+}
+
+export default { createDoctor, getAllDoctors, getDoctorByRegistration };
