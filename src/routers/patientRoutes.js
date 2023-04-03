@@ -28,4 +28,10 @@ patientRouter.get(
 	patientControllers.getHistory
 );
 
+patientRouter.delete(
+	"/delete",
+	authMiddleware.validateCredentials("patients"),
+	authController.deleteAccount("patients")
+);
+
 export default patientRouter;

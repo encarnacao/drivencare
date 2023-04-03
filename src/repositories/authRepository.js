@@ -6,4 +6,9 @@ async function searchEmail(email, table){
     return rows;
 }
 
-export default { searchEmail }
+function deleteByEmail(email, table){
+    const query = "DELETE FROM " + table + " WHERE email = $1";
+    return database.query(query, [email]);
+}
+
+export default { searchEmail, deleteByEmail }

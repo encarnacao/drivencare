@@ -36,4 +36,10 @@ doctorRouter.get(
 	doctorControllers.getHistory
 );
 
+doctorRouter.delete(
+	"/delete",
+	authMiddleware.validateCredentials("doctors"),
+	authController.deleteAccount("doctors")
+);
+
 export default doctorRouter;

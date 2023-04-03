@@ -15,4 +15,17 @@ function signin(table) {
 	};
 }
 
-export default { signin };
+function deleteAccount(table) {
+	return async (_, res, next) => {
+		const { email } = res.locals.user;
+		if (!email) throw errors.unauthorizedError();
+		try {
+			await authServices.deleteAccount(email, table);
+			res.sendStatus(204);
+		} catch (e) {
+			next(e);
+		}
+	};
+}
+
+export default { signin, deleteAccount };
