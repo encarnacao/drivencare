@@ -63,6 +63,19 @@ async function updateAppointmentStatus(appointmentId, status) {
 	return rows;
 }
 
+async function getTodayAppointments() {
+	const { rows } = await database.query(`
+		SELECT a.id, a.date, a.time, a.status, d.name AS doctor, 
+		d.specialty AS doctor_specialty, p.name AS patient, p.email AS patient_email
+		FROM appointments a
+		JOIN doctors d ON a.doctor_id = d.id
+		JOIN patients p ON a.patient_id = p.id
+		WHERE a.date = CURRENT_DATE
+		ORDER BY a.time ASC;
+	`);
+	return rows;
+}
+
 export default {
 	searchAppointmentsByDate,
 	scheduleAppointment,
@@ -70,4 +83,5 @@ export default {
 	updateAppointmentStatus,
 	getAppointmentById,
 	searchFutureAppointments,
+	getTodayAppointments
 };
